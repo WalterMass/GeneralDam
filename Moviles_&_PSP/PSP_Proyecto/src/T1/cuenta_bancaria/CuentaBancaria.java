@@ -12,6 +12,6 @@ public class CuentaBancaria {
         return gastos;
     }
     public void incrementarGastos(int incremento) {
-        this.gastos = gastos + incremento;
+        this.gastos += incremento;
     }
 }

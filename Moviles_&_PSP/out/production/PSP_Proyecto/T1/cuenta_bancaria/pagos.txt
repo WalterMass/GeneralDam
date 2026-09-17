@@ -1,0 +1,14 @@
+Procesador de pago > clientes 10 > cuentas  > 100.000 gastos
+====================================================================================================
+Ejemplo CuentaBancaria y Clientes
+
+Tendremos una CuentaBancaria sobre la que varios clientes
+(hilos) incrementarán los gastos.
+
+Tendremos que hacer un total de 100.000 gastos, repartidos
+equitativamente sobre cada cliente.
+
+Al final del proceso, la cuenta bancaria debería tener 100.000 gastos,
+y cada cliente haber hecho su parte.
+
+A comprobarlo…

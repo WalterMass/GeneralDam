@@ -1,7 +1,0 @@
-Github: walter.massari.dam@gmail.com -> dam_1234
-AulaVirtual: AVTADsdZ3E 
-
-
-17/9/2026 -> MOVILES : actividad Bingo en kotlin (21/9/2026)
-16/9/2026 -> ACCESO_DATOS: practica_02 en java netbeans (18/9/2026)
- -> PSP: actividad Cuenta Bancaria en java (18/9/2026)

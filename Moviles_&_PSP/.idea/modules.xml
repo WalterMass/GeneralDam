@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Moviles_&amp;_PSP.iml" filepath="$PROJECT_DIR$/.idea/Moviles_&amp;_PSP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PSP_Proyecto/PSP_Proyecto.iml" filepath="$PROJECT_DIR$/PSP_Proyecto/PSP_Proyecto.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kotlin_0/kotlin_0.iml" filepath="$PROJECT_DIR$/kotlin_0/kotlin_0.iml" />
+    </modules>
+  </component>
+</project>
