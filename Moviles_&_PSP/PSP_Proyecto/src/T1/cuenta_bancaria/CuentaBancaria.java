@@ -11,7 +11,9 @@ public class CuentaBancaria {
     public int getGastos() {
         return gastos;
     }
-    public void incrementarGastos(int incremento) {
+
+    public synchronized void incrementarGastos(int incremento) {
+
         this.gastos += incremento;
     }
 }

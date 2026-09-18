@@ -1,8 +1,8 @@
 package T1.cuenta_bancaria;
 // clase principal
 public class ProcesadorPagos {
-    public static int TOTAL_GASTOS = 100000;
-    public static int NUM_CLIENTES = 10;
+    public static final int TOTAL_GASTOS = 1000_000;
+    public static final int NUM_CLIENTES = 1000;
 
     static void main(String[] args) {
         System.out.println("PROCESADOR DE PAGOS");
