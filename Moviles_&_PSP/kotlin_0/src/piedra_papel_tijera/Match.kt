@@ -1,6 +1,8 @@
+
 package piedra_papel_tijera
 
 import java.util.Scanner
+
 
 class Match {
     companion object{
@@ -10,60 +12,60 @@ class Match {
     private lateinit var results: Array<String>
 
     fun execute(){
-        val player1 = Player("Player1", 0, PPT.EMPTY)
-        val player2 = Player("CPU", 0, PPT.EMPTY)
+        val playerPPT1 = Player_PPT("Player1", 0, PPT.EMPTY)
+        val playerPPT2 = Player_PPT("CPU", 0, PPT.EMPTY)
 
-        val notPlayed : String = "${player1.name} -- : ${player2.name} --"
+        val notPlayed = "${playerPPT1.name} -- : ${playerPPT2.name} --"
 
         val rounds : Int = getRounds()
         results = Array(rounds) {notPlayed}
 
-        val winner : Player? = play(player1, player2)
+        val winner : Player_PPT? = play(playerPPT1, playerPPT2)
 
         if (winner == null){
-            println("TOTAL DRAW! ${player1.playerScore()} : ${player2.playerScore()}")
+            println("TOTAL DRAW! ${playerPPT1.playerScore()} : ${playerPPT2.playerScore()}")
         }else println("${winner.name} WINS! - ${winner.playerScore()}")
 
         showResults()
     }
 
-    private fun play(player1 : Player, player2: Player): Player? {
-        for (i in 0 until results.size){
-            player2.setMove(cpuRandomMove())
-            println("CPU has: ${player2.getMove()}")
-            player1.setMove(getMove())
-            judgeResult(player1, player2, i)
+    private fun play(playerPPT1 : Player_PPT, playerPPT2: Player_PPT): Player_PPT? {
+        for (i in results.indices){
+            playerPPT2.setMove(cpuRandomMove())
+            println("CPU has: ${playerPPT2.getMove()}")
+            playerPPT1.setMove(getMove())
+            judgeResult(playerPPT1, playerPPT2, i)
         }
 
-        if (player1.score == player2.score){
-            return null
+        return if (playerPPT1.score == playerPPT2.score){
+            null
         } else{
-            if (player1.score > player2.score){
-                return player1
-            }else return player2
+            if (playerPPT1.score > playerPPT2.score){
+                playerPPT1
+            }else playerPPT2
         }
     }
 
-    fun judgeResult(player1 : Player, player2 : Player, index: Int) {
+    fun judgeResult(playerPPT1 : Player_PPT, playerPPT2 : Player_PPT, index: Int) {
 
-        if (player1.getMove() == player2.getMove()){
-            val draw = "${player1.playerScore()} : ${player2.playerScore()} - DRAW"
+        if (playerPPT1.getMove() == playerPPT2.getMove()){
+            val draw = "${playerPPT1.playerScore()} : ${playerPPT2.playerScore()} - DRAW"
             results[index] = "Round_${index}: DRAW \n$draw"
             println(draw)
-        } else if ( (player1.getMove() == PPT.ROCK && player2.getMove() == PPT.SCISSORS)
-            || (player1.getMove() == PPT.PAPER && player2.getMove() == PPT.ROCK)
-            || (player1.getMove() == PPT.SCISSORS && player2.getMove() == PPT.PAPER) )
+        } else if ( (playerPPT1.getMove() == PPT.ROCK && playerPPT2.getMove() == PPT.SCISSORS)
+            || (playerPPT1.getMove() == PPT.PAPER && playerPPT2.getMove() == PPT.ROCK)
+            || (playerPPT1.getMove() == PPT.SCISSORS && playerPPT2.getMove() == PPT.PAPER) )
         {
-            player1.score++
-            val mensajeVictoria1 = "${player1.playerScore()} : ${player2.playerScore()} - POINT FOR ${player1.name}"
-            results[index] = "Round_${index}: ${player1.name} \n$mensajeVictoria1"
+            playerPPT1.score++
+            val mensajeVictoria1 = "${playerPPT1.playerScore()} : ${playerPPT2.playerScore()} - POINT FOR ${playerPPT1.name}"
+            results[index] = "Round_${index}: ${playerPPT1.name} \n$mensajeVictoria1"
             println(mensajeVictoria1)
-        }else if ((player2.getMove() == PPT.ROCK && player1.getMove() == PPT.SCISSORS)
-            || (player2.getMove() == PPT.PAPER && player1.getMove() == PPT.ROCK)
-            || (player2.getMove() == PPT.SCISSORS && player1.getMove() == PPT.PAPER)){
-            player2.score++
-            val mensajeVictoria2 = "${player1.playerScore()} : ${player2.playerScore()} - POINT FOR ${player2.name}"
-            results[index] = "Round_${index}: ${player2.name}$mensajeVictoria2"
+        }else if ((playerPPT2.getMove() == PPT.ROCK && playerPPT1.getMove() == PPT.SCISSORS)
+            || (playerPPT2.getMove() == PPT.PAPER && playerPPT1.getMove() == PPT.ROCK)
+            || (playerPPT2.getMove() == PPT.SCISSORS && playerPPT1.getMove() == PPT.PAPER)){
+            playerPPT2.score++
+            val mensajeVictoria2 = "${playerPPT1.playerScore()} : ${playerPPT2.playerScore()} - POINT FOR ${playerPPT2.name}"
+            results[index] = "Round_${index}: ${playerPPT2.name}$mensajeVictoria2"
             println(mensajeVictoria2)
 
         }
@@ -118,7 +120,7 @@ class Match {
     }
 
     fun showResults(){
-        println("\n\nMATCH RESULTS\n\n")
+        println("\n\nMATCH RESULTS\n========================================================================")
         for (result in results){
             println(result)
         }

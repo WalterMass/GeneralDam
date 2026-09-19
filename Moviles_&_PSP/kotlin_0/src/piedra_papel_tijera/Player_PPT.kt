@@ -1,7 +1,6 @@
 package piedra_papel_tijera
 
-class Player (val name : String, var score : Int, private var move : PPT){
-
+class Player_PPT (val name : String, var score : Int, private var move : PPT) {
     fun setMove(ppt: PPT){
         move = ppt
     }

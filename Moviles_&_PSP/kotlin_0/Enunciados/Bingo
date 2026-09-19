@@ -1,0 +1,35 @@
+Queremos implementar el juego del bingo para una
+partida única donde podrán jugar entre 1 y N Jugadores.
+Inicialmente debemos saber cuantos jugadores jugarán la
+partida y un identificador de tipo String que sea único
+para cada jugador y el número de cartones que van a
+querer para dicha partida.
+Cada cartón estará formado por 4 números no repetidos y
+para no hacer partidas “casi infinitas” el bingo tendrá
+unicamente bolas del 1 al 20.
+Una vez que los jugadores estén “identificados” y con
+sus cartones, debería empezar la partida.
+Antes de sacar cada bola, debe mostrarse toda la info del
+juego, es decir, para cada jugador, el estado de su cartón.
+A partir de ahí sacaremos una bola del BOMBO y se comprobará que cartones de cada jugador
+tienen esa bola. Para esta funcionalidad se pueden plantear distintas soluciones.
+Cada vez que se saca una bola, se mostrará, por ejemplo los números que le quedan a un jugador
+por acertar.
+Cuando uno o varios jugadores en sus cartones hayan acertado todos los números, la partida de
+bingo terminará y se mostrarán el/los ganadores. Tendremos en cuenta que cuando sale una bola,
+varios jugadores a la vez pueden haber terminado su cartón, por lo que se considera ganador a
+todos.
+Finalmente, debemos implementar un RANKING usando una estructura de MAPA. En este ranking
+se almacenará el id de cada jugador y las veces que ha ganado un bingo. Si no han ganado aún, no
+es necesario que aparezcan en el RANKING.
+Este RANKING se mostrará al finalizar cada partida, además debe escribirse en un fichero con la
+estructura que consideréis.
+Como ampliación, una vez que tengáis esto funcionando para una única partida, la idea sería
+que al terminar una partida, pudiéramos jugar más partidas, con una sencilla pregunta del
+tipo, ¿QUIERES JUGAR OTRA PARTIDA? S/N
+Si la respuesta es afirmativa, como además habremos escrito el RANKING en un fichero,
+deberíamos cargar el RANKING DEL FICHERO en alguna estructura de datos para que si
+un jugador repite partida y hace BINGO, se actualice el RANKING al finalizar la partida.
+TODOS LOS RECURSOS NECESARIOS PARA RESOLVER ESTE EJERCICIO SON
+CONCEPTOS DE PROGRAMACIÓN GENÉRICOS. OBVIAMENTE AHORA
+QUEREMOS IMPLEMENTARLOS EN KOTLIN
