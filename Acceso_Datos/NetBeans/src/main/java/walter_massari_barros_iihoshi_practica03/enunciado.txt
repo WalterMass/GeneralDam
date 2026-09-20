@@ -1,0 +1,28 @@
+1. Crea un programa que lee byte a byte el contenido del datos.dat y muestre
+su valor numérico por pantalla.
+
+2. Crea un programa que lea en bloques de 1000 bytes el contenido del
+fichero ejemplo.jpg y muestre su valor numérico por pantalla.
+
+3. Crea un programa que lea, utilizando las clases FileReader y
+BufferedReader, el contenido del fichero texto.txt y muestra su contenido
+por pantalla.
+
+4. Crea un programa que lea, utilizando la clase Scanner, el contenido del
+fichero texto.txt y lo muestre por pantalla
+
+5. Crea un programa que lea los números que hay en cada línea del fichero
+números.txt e al final de la lectura indica cuántos de esos números son
+pares y cuántos impares
+
+6. Crea un programa que contenga una clase llamada persona con los
+siguientes atributos:
+a. Nombre
+b. Edad
+c. DNI
+d. Telefono
+En la clase principal lee el fichero Personas.txt, que almacena los datos
+de una persona en cada línea. Estos datos están separados con el
+símbolo “;”.
+Crea una lista con todas las personas que almacena el fichero y luego
+escribe por pantalla todos sus datos.
