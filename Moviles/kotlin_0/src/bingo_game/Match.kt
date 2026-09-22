@@ -3,6 +3,7 @@ package bingo_game
 import java.util.InputMismatchException
 import java.util.Scanner
 import java.io.File
+import kotlin.collections.filterTo
 
 class Match : Playable<PlayerBingo> {
     companion object{
@@ -96,7 +97,7 @@ class Match : Playable<PlayerBingo> {
                     }
 
                 }
-            }dd
+            }
 
         }
 
