@@ -1,6 +1,6 @@
 package bingo_game
 
-class Player_Bingo(id : String, userName: String, score: Int, val cards : Array<Cardboard>) : Player(id, userName, score){
+class PlayerBingo(id : String, userName: String, score: Int, val cards : Array<Cardboard>) : Player(id, userName, score){
     constructor(id: String, userName: String, score: Int) : this(
         id = id,
         userName = userName,
@@ -14,10 +14,10 @@ class Player_Bingo(id : String, userName: String, score: Int, val cards : Array<
     override fun toString(): String {
         var cardString = "Null"
 
-        if (!cards.isNullOrEmpty()){
+        if (cards.isNotEmpty()){
             cardString = cards.joinToString("\n")
         }
-        return "${id} - ${userName} - score: ${score}\n${cardString}"
+        return "$id - $userName - score: ${score}\n${cardString}"
     }
 
 

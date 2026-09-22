@@ -23,7 +23,7 @@ public class Ejercicio3_1 {
             switch(opcion){
                 case "1": actividad1(new File("src/Files/datos.dat")); break;
                 case "2": actividad2();break;
-                case "3": ;break;
+                case "3": actividad3();break;
                 case "4": ;break;
             }
 
@@ -51,7 +51,7 @@ public class Ejercicio3_1 {
 
     private static void actividad1(File file) throws IOException{
         FileInputStream lector = new FileInputStream(file);
-        byte[] lectura = new byte[100];
+        byte[] lectura = new byte[1];
         int longitud;
         do{
             longitud = lector.read(lectura);
@@ -76,22 +76,14 @@ public class Ejercicio3_1 {
             return;
         }
 
-        // Buffer de 1000 bytes por bloque
-        byte[] buffer = new byte[1000];
+       
+        byte[] reader = new byte[1000];
 
         try (FileInputStream fis = new FileInputStream(archivo)) {
             int bytesLeidos;
             int numeroBloque = 1;
-
-            // fis.read(buffer) lee HASTA 1000 bytes y devuelve cuántos leyó realmente.
-            // Devuelve -1 cuando llega al final del archivo (EOF).
-            while ((bytesLeidos = fis.read(buffer)) != -1) {
-                System.out.println("Bloque #" + numeroBloque + " | Bytes leídos: " + bytesLeidos);
-
-                // Aquí procesas los datos del buffer
-                // Ojo: Solo procesamos desde la posición 0 hasta 'bytesLeidos'
-                procesarBloque(buffer, bytesLeidos);
-
+            while ((bytesLeidos = fis.read(reader)) != -1) {
+                System.out.println("Bloque " + numeroBloque + " | Bytes leídos: " + bytesLeidos);
                 numeroBloque++;
             }
 
@@ -100,10 +92,26 @@ public class Ejercicio3_1 {
         }
     }
     
-    private static void procesarBloque(byte[] buffer, int cantidadBytes) {
-        // Ejemplo de procesamiento: imprimir los bytes en hexadecimal o utilizarlos
-        // (En el último bloque, 'cantidadBytes' podría ser menor a 1000)
+    public static void actividad3() throws IOException{
+        String ruta = "src/Files/ficheroEj/texto.txt";
+        
+        try(FileReader fr = new FileReader(ruta);
+             BufferedReader br = new BufferedReader(fr)){
+            
+            String linea;
+            while((linea = br.readLine()) != null){
+                 System.out.println(linea);
+            }
+        }catch(IOException e){
+            
+        }
     }
-   
-}
+    
+    public static void actividad4() throws IOException{
+        String ruta = "src/Files/ficheroEj/texto.txt";
+        
+        
+    }
+    
+ }
 

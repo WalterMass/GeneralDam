@@ -4,7 +4,7 @@ import java.util.InputMismatchException
 import java.util.Scanner
 import java.io.File
 
-class Match : Playable<Player_Bingo> {
+class Match : Playable<PlayerBingo> {
     companion object{
         const val DRUM_SIZE = 20
         const val CARDBOARD_SIZE = 4
@@ -13,12 +13,12 @@ class Match : Playable<Player_Bingo> {
     }
 
     override fun execute(){
-        val players = ArrayList<Player_Bingo>()
+        val players = ArrayList<PlayerBingo>()
         signInPlayers(players)
         play(players)
     }
 
-    override fun play(players: ArrayList<Player_Bingo>) {
+    override fun play(players: ArrayList<PlayerBingo>) {
 
         for (i in players.indices){
             println("${players.get(i)} \n")
@@ -30,7 +30,7 @@ class Match : Playable<Player_Bingo> {
         val winners = Array<Boolean>(number_of_players) {false}
 
         var finish = false
-        while(!drum.isEmpty() && !finish){
+        while(drum.isNotEmpty() && !finish){
             val ballRemoved = drum.removeLast()
             println(ballRemoved)
 
@@ -40,7 +40,7 @@ class Match : Playable<Player_Bingo> {
 
             if (!finish){
                 println("Press ENTER for the next round")
-                sc.nextLine()
+//                sc.nextLine()
             }
         }
 
@@ -48,27 +48,26 @@ class Match : Playable<Player_Bingo> {
 
     }
 
-    override fun showResults(players: ArrayList<Player_Bingo>) {
-        //todo needs to be reviewed
-        val rankingAddedPlayers : ArrayList<Player_Bingo> = players
+    override fun showResults(players: ArrayList<PlayerBingo>) {
+        val rankingAddedPlayers : ArrayList<PlayerBingo> = players
             .filterTo(ArrayList()){ it.score > 0 }
             .apply { sortByDescending { it.score }}
 
-        val ranking : MutableMap<Int, Player_Bingo> = rankingAddedPlayers.associateBy {
-            it.score
-        } as MutableMap<Int, Player_Bingo>
-
+        val ranking : MutableMap<String, PlayerBingo> = rankingAddedPlayers.associateBy {
+            it.id
+        } as MutableMap<String, PlayerBingo>
+        //todo needs to be reviewed
         pullWinningPlayers(ranking)
         saveWinningPlayers(ranking)
         println("\n\nRANKINGS\n")
         ranking.forEach {
-            println("${it.value.id} ${it.value.userName} ${it.key}")
+            println("${it.value.id} ${it.value.userName} ${it.value.score}")
         }
 
 
     }
 
-    fun pullWinningPlayers(ranking: MutableMap<Int, Player_Bingo>): Map <Int, Player_Bingo>{
+    fun pullWinningPlayers(ranking: MutableMap<String, PlayerBingo>): MutableMap<String, PlayerBingo> {
         val directory = File("src/files_bingo")
         val file = File (directory, "players.txt")
 
@@ -85,14 +84,19 @@ class Match : Playable<Player_Bingo> {
                     if (atributs.size >= 3) {
                         val id = atributs[0]
                         val userName = atributs[1]
-                        val key : Int = Integer.parseInt(atributs[2])
+                        val score : Int = Integer.parseInt(atributs[2])
 
-                        val p = Player_Bingo(id, userName, key)
-                        ranking[key] = p
+                        val p = PlayerBingo(id, userName, score)
+                        if (ranking.containsValue(p)){
+                            ranking[id] = p
+                        }else {
+                            ranking[id]?.let { player ->
+                                player.score++                            }
+                        }
                     }
 
                 }
-            }
+            }dd
 
         }
 
@@ -100,7 +104,7 @@ class Match : Playable<Player_Bingo> {
 
     }
 
-    fun saveWinningPlayers(addedWinners: MutableMap<Int, Player_Bingo>){
+    fun saveWinningPlayers(addedWinners: MutableMap<String, PlayerBingo>){
         val directory = File("src/files_bingo")
         val file = File(directory, "players.txt")
 
@@ -114,21 +118,21 @@ class Match : Playable<Player_Bingo> {
 
             file.bufferedWriter().use { writer ->
                 addedWinners.forEach { (key, player) ->
-                    writer.write("${player.id} | ${player.userName} | $key")
+                    writer.write("$key | ${player.userName} | ${player.score}")
                     writer.newLine()
                 }
             }
             println("Data saved successfully: ${directory.absolutePath}")
 
-        }catch(e: Exception){
+        }catch(_: Exception){
             println("Something went wrong while saving players.txt")
         }
     }
 
-    fun checkWinners(winners: Array<Boolean>, players: ArrayList<Player_Bingo>): Boolean{
+    fun checkWinners(winners: Array<Boolean>, players: ArrayList<PlayerBingo>): Boolean{
         var value = false
         for (i in winners.indices){
-            if (winners[i] == true){
+            if (winners[i]){
                 players.get(i).score++
                 value = true
             }
@@ -136,7 +140,7 @@ class Match : Playable<Player_Bingo> {
         return value
     }
 
-    fun checkDrum(ballRemoved : Int, players : ArrayList<Player_Bingo>, winners : Array<Boolean>){
+    fun checkDrum(ballRemoved : Int, players : ArrayList<PlayerBingo>, winners : Array<Boolean>){
         for (i in players.indices){
             for (j in players.get(i).cards.indices){
                 val conteinsBall = players.get(i).cards.get(j).checkBall(ballRemoved)
@@ -161,25 +165,25 @@ class Match : Playable<Player_Bingo> {
         }
     }
 
-    private fun signInPlayers(players : MutableList<Player_Bingo>){
+    private fun signInPlayers(players : MutableList<PlayerBingo>){
         println("Type how many players will be in this match:")
         number_of_players = getInt()
-        for (i in 0..<number_of_players){
-            addPlayer(players, i)
+        repeat((0..<number_of_players).count()) {
+            addPlayer(players)
         }
 
 
     }
 
-    private fun addPlayer(players: MutableList<Player_Bingo>, index: Int){
+    fun addPlayer(players: MutableList<PlayerBingo>){
         //update the local variable to have a reference on the id of the players
-        Player_Bingo.playerBingoIndex++
+        PlayerBingo.playerBingoIndex++
 
-        val id = "P-"+Player_Bingo.playerBingoIndex
+        val id = "P-"+PlayerBingo.playerBingoIndex
         val userName = getString()
         val cardboards = generateCardboards(id)
 
-        val player = Player_Bingo(id, userName, 0, cardboards)
+        val player = PlayerBingo(id, userName, 0, cardboards)
         players.add(player)
     }
 
