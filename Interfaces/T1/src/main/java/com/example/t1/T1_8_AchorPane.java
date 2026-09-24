@@ -20,10 +20,10 @@ public class T1_8_AchorPane extends Application {
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().addAll(button1, button2, button3, button4, button5);
 
-        AnchorPane.setRightAnchor(button1, 10d);
+        AnchorPane.setBottomAnchor(button4, 10d);
+        AnchorPane.setTopAnchor(button4, 200d);
+        AnchorPane.setRightAnchor(button1, 100d);
         AnchorPane.setLeftAnchor(button1, 100d);
-
-
 
         Scene scene = new Scene(anchorPane, 500, 500);
         stage.setScene(scene);
