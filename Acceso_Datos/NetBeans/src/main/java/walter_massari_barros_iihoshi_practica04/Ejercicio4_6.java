@@ -5,6 +5,7 @@
 package walter_massari_barros_iihoshi_practica04;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -13,8 +14,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -28,10 +30,11 @@ public class Ejercicio4_6 {
     }
 
     private static void actividad6() throws IOException,NoSuchFileException{
+        Scanner sc = new Scanner(System.in);
         String ruta = "src/Files/ficheroEj/juegos.csv";
         File file = new File(ruta);
         List<Juego> juegos = new ArrayList();
-        List<Juego> recomendacion = new ArrayList();
+        List<Juego> recomendacion;
         
         
         try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))){
@@ -43,12 +46,45 @@ public class Ejercicio4_6 {
                 int edadMinima = Integer.parseInt(atributos[1]);
                 int minJugadores = Integer.parseInt(atributos[2]);
                 int maxJugadores = Integer.parseInt(atributos[3]);
-                int duracion = Integer.parseInt(atributos[4]);                
+                int duracion = Integer.parseInt(atributos[4]);
+                juegos.add(new Juego(nombre, edadMinima, minJugadores, maxJugadores, duracion));
             }
             
             System.out.println("edad del jugador más joven:");
+            int minEdad = Integer.parseInt(sc.nextLine());
             System.out.println("cantidad de jugadores:");
+            int numJugadores = Integer.parseInt(sc.nextLine());
             System.out.println("tiempo disponible en minutos");
+            int duracionPartida = Integer.parseInt(sc.nextLine());
+            
+            recomendacion = juegos.stream().filter(j -> 
+                    j.getEdadMinima() <= minEdad &&
+                    j.getDuracion() <= duracionPartida &&
+                    j.getMaxJugadores() >= numJugadores
+                    ).collect(Collectors.toList());
+            
+            System.out.println("\nEstas son las opciones disponibles con esos criterios:");
+            recomendacion.forEach(p -> System.out.println(p));
+            
+            System.out.println("Deseas guardar la recomendacion(s)?");
+            boolean guardar = sc.nextLine().equalsIgnoreCase("s");
+            
+            if (guardar){
+                File dstFile = new File("src/Files/juegosRecomendados.csv");
+                try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dstFile)))){
+                    if (!dstFile.exists()){
+                        dstFile.createNewFile();
+                    }
+                        for(Juego j : recomendacion){
+                            bw.write(j.toString());
+                            bw.newLine();
+                        }
+                }
+            }
+            
+            
+            
+            
         }catch(NumberFormatException e){
             
         }

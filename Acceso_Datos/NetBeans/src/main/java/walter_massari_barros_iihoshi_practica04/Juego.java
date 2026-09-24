@@ -32,11 +32,11 @@ public class Juego {
         this.nombre = nombre;
     }
 
-    public int getEdadmMinima() {
+    public int getEdadMinima() {
         return edadMinima;
     }
 
-    public void setEdadmMinima(int edadmMinima) {
+    public void setEdadMinima(int edadmMinima) {
         this.edadMinima = edadmMinima;
     }
 
@@ -62,6 +62,11 @@ public class Juego {
 
     public void setDuracion(int duracion) {
         this.duracion = duracion;
+    }
+
+    @Override
+    public String toString() {
+        return nombre + "; " + edadMinima + "; " + minJugadores + "; " + maxJugadores + "; " + duracion;
     }
 
     
