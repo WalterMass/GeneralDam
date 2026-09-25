@@ -41,11 +41,9 @@ public class Ejercicio4_5 {
         if (!org.exists()){
             return;
         }
-        
-        List<String> archivo = new ArrayList();
-        
-        try (FileInputStream fis = new FileInputStream(origen);
-             FileOutputStream fos = new FileOutputStream(destino)) {
+                
+        try (FileInputStream fis = new FileInputStream(org);
+             FileOutputStream fos = new FileOutputStream(dst)) {
 
             byte[] buffer  = new byte[8192];
             int leidos;

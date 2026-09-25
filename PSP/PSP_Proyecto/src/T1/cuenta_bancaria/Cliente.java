@@ -12,6 +12,7 @@ public class Cliente extends Thread{
     public Cliente(CuentaBancaria cuenta, String nombre) {
         this.cuenta = cuenta;
         this.nombre = nombre;
+
     }
 
     @Override

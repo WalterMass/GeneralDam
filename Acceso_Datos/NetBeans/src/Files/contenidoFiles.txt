@@ -1,0 +1,12 @@
+1 - contenidoFiles.txt - Fichero
+2 - numeros.txt - Fichero
+3 - juegosRecomendados.csv - Fichero
+4 - ejemplo.jpg - Fichero
+5 - Datos - Directorio
+6 - texto.txt - Fichero
+7 - extension.txt - Fichero
+8 - ficheroEj - Directorio
+9 - libros.csv - Fichero
+10 - fibonnaci.txt - Fichero
+11 - pares.txt - Fichero
+En el directorio Files hay 12 elementos
