@@ -4,16 +4,16 @@
  */
 package walter_massari_barros_iihoshi_practica05;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
+import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.nio.file.NoSuchFileException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -24,31 +24,54 @@ public class Ejercicio5_1 {
         try{
             actividad1();
         }catch(IOException e){
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
     
     public static void actividad1() throws IOException{
         File archivo = new File("src/Files/ficheroEj/Personas.txt");
-        FileOutputStream fos = new FileOutputStream(archivo);
+        File archivoDst = new File("src/Files/practica5/PersonasSerial.dat");
         
-        File archivoDst = new File("src/Files/practica5/PersonasSerial.dad");
-        FileInputStream fis = new FileInputStream(archivoDst);
-        
+        List<Persona> personas = new ArrayList<>();
+        if (!archivoDst.exists()) {
+            archivoDst.getParentFile().mkdirs();
+            archivoDst.createNewFile();
+        }
         try(
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
-                ObjectInputStream ois = new ObjectInputStream(fis);
+                BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(archivo)));
+                ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(archivoDst));
                 ){
             
-            if (!archivoDst.exists()) {
-                archivo.getParentFile().mkdirs();
-                archivo.createNewFile();
+            
+            while(br.ready()){
+                String[] linea = br.readLine().split(";");
+                personas.add(new Persona(
+                        linea[0],
+                        Integer.parseInt(linea[1]),
+                        linea[2],
+                        linea[3]
+                ));
             }
             
+            for(Persona p : personas){
+                boolean verdad = escribirObjetoSeguro(oos, p);
+                System.out.println(p+": "+verdad);
+            }
             
             
         }catch(NoSuchFileException e){
             System.out.println(e.getMessage());
+        }
+    }
+    
+    public static boolean escribirObjetoSeguro(ObjectOutputStream oos, Object objeto) {
+        try {
+            oos.writeObject(objeto);
+            oos.flush(); // Fuerza a que los datos se vacíen en el flujo
+            return true; // Si llega aquí, la escritura fue exitosa
+        } catch (IOException e) {
+            // Aquí puedes registrar el error si lo necesitas (ej. e.printStackTrace())
+            return false; // Si hay una excepción, falló la escritura
         }
     }
 }

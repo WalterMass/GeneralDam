@@ -12,7 +12,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-public class T1_6_3_BorderPain extends Application {
+public class T1_6_3_BorderPane extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("T1_6_2_BorderPain");

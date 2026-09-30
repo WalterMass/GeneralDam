@@ -4,11 +4,13 @@
  */
 package walter_massari_barros_iihoshi_practica05;
 
+import java.io.Serializable;
+
 /**
  *
  * @author alumno
  */
-public class Persona {
+public class Persona implements Serializable{
     private String nombre;
     private int edad;
     private String dni;
@@ -55,7 +57,7 @@ public class Persona {
 
     @Override
     public String toString() {
-        return nombre + "; " + edad + "; " + dni + ";" + telefono;
+        return nombre + ";" + edad + ";" + dni + ";" + telefono;
     }
     
     
