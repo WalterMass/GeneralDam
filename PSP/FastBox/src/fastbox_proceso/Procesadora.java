@@ -9,6 +9,7 @@ public class Procesadora {
     public static final int NUM_PUESTOS_PREPARACION = 3;
     public static final int NUM_IMPRESORAS = 2;
     public static final int NUM_PEDIDOS = 12;
+    public static Recursos recursos = new Recursos(NUM_PUESTOS_PREPARACION,NUM_IMPRESORAS);
 
     public static int ordenDePedido = 0;
 
@@ -20,7 +21,6 @@ public class Procesadora {
         }
     }
     public static void exe() throws InterruptedException {
-        Recursos recursos = new Recursos(NUM_PUESTOS_PREPARACION,NUM_IMPRESORAS);
         List<Pedido> pedidos = new ArrayList<>();
 
 

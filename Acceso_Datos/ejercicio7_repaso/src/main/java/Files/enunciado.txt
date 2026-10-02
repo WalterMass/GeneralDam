@@ -1,0 +1,29 @@
+
+Una empresa de seguros nos ha pedido un programa con el que gestionar los
+coches que asegura. De cada uno de los coches guarda los siguientes datos.
+1. Marca
+2. Modelo
+3. Matrícula
+4. Año de matriculación
+5. Color
+6. Descansa en garaje.
+7. Kilómetros al año
+
+Los coches se guardarán de forma ordenada, de menor a mayor, por el número
+de la matrícula sin letra..
+
+La información de los coches se almacenará uno a uno, no el conjunto completo
+a la vez, en un fichero serializado.
+
+Unidad de trabajo 01 Trabajo con ficheros
+
+Página | 2
+El programa permitirá al usuario, mediante un menú, listar todos los coches con
+sus características, añadir un coche nuevo, modificar uno existente o eliminar
+uno existente.
+Además, se pide una funcionalidad adicional que permita al usuario exportar la
+información de los coches a un fichero con extensión “.csv” o “.xml”.
+En el caso del fichero “.csv”: Cada línea de ese fichero contendrá los datos de
+uno de los coches, separados por el carácter “;”.
+En el caso del fichero “.xml” Tendrá un nodo padre “coches”, dentro del cual
+estarán los elementos “coche” con sus características.

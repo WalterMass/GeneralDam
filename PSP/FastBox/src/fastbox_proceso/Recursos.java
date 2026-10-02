@@ -7,8 +7,6 @@ import java.util.concurrent.Semaphore;
 
 public class Recursos {
     public static int numeroEtiqueta = 1;
-    public static final Object lock1 = new Object();
-
     private Semaphore puestosDePreparacion;
     private Semaphore impresoras;
 
@@ -56,7 +54,7 @@ public class Recursos {
                 Thread.sleep(sleepTime);
 
 
-                synchronized (lock1){
+                synchronized (pedido.getRecursos()){
                     pedido.setCodigoEtiqueta(getEtiquetaUnica());
                     numeroEtiqueta++;
                 }
