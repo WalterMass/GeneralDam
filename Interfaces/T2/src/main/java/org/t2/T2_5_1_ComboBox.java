@@ -29,14 +29,14 @@ public class T2_5_1_ComboBox extends Application {
         comboBox1.getItems().addAll(labels1);
 
         List<Label>labels2 = new ArrayList<>();
-        String color = String.format("#-%05d", 0);
+        String color = String.format("#-%04d", 0);
         ComboBox comboBox2 = new ComboBox();
         hBox.getChildren().add(comboBox2);
         for (int i = 0; i < CANTIDAD; i++){
+            color += 20;
             Label label = new Label();
             labels2.add(label);
             labels2.get(i).setStyle("-fx-background-color: #"+color+"; -fx-arc-width: 25; -fx-arc-height: 10");
-            color += 50;
         }
         comboBox2.getItems().addAll(labels2);
 
