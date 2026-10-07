@@ -5,9 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -29,16 +27,67 @@ public class T2_5_1_ComboBox extends Application {
         comboBox1.getItems().addAll(labels1);
 
         List<Label>labels2 = new ArrayList<>();
-        String color = String.format("#-%04d", 0);
         ComboBox comboBox2 = new ComboBox();
         hBox.getChildren().add(comboBox2);
         for (int i = 0; i < CANTIDAD; i++){
-            color += 20;
+
+            String color = String.format("#%06X", i * 20);
+
             Label label = new Label();
+            label.setStyle(
+                    "-fx-background-color: " + color + ";" +
+                            "-fx-padding: 5;" +
+                            "-fx-arc-width: 25;" +
+                            "-fx-arc-height: 10;"
+            );
+
             labels2.add(label);
-            labels2.get(i).setStyle("-fx-background-color: #"+color+"; -fx-arc-width: 25; -fx-arc-height: 10");
         }
         comboBox2.getItems().addAll(labels2);
+
+        String[] fuentes = {
+                "Arial",
+                "Calibri",
+                "Cambria",
+                "Comic Sans MS",
+                "Consolas",
+                "Courier New",
+                "Georgia",
+                "Helvetica",
+                "Impact",
+                "Lucida Console",
+                "Lucida Sans",
+                "Microsoft Sans Serif",
+                "Palatino Linotype",
+                "Segoe UI",
+                "Tahoma",
+                "Times New Roman",
+                "Trebuchet MS",
+                "Verdana",
+                "Century Gothic",
+                "Garamond",
+                "Book Antiqua",
+                "Franklin Gothic Medium",
+                "Gill Sans",
+                "Rockwell",
+                "Baskerville",
+                "Copperplate",
+                "Futura",
+                "Optima",
+                "Perpetua",
+                "Candara"
+        };
+
+        ComboBox comboBox3 = new ComboBox();
+        List<Label> labels3 = new ArrayList<>();
+        hBox.getChildren().add(comboBox3);
+        for (int i = 0; i < CANTIDAD; i++){
+            Label label = new Label(fuentes[i]);
+            label.setStyle("-fx-font-family: '"+fuentes[i]+"' ;"+" -fx-arc-height: 10; -fx-arc-width: 25;");
+            labels3.add(label);
+        }
+
+        comboBox3.getItems().addAll(labels3);
 
         hBox.setAlignment(Pos.TOP_CENTER);
         Scene scene = new Scene(hBox, 500, 500);
