@@ -66,7 +66,8 @@ public class Ejercicio5_2 {
         List<Persona> personas = new ArrayList<>();
 
         // El try-with-resources gestiona el cierre automático de streams
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(org))) {
+        try (ObjectInput
+                Stream ois = new ObjectInputStream(new FileInputStream(org))) {
             
             while (true) {
                 try {
