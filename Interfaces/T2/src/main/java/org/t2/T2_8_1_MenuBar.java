@@ -2,11 +2,14 @@ package org.t2;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,23 +21,42 @@ public class T2_8_1_MenuBar extends Application {
 
         BorderPane borderPane = new BorderPane();
 
-        MenuBar mainMenu = new MenuBar();
+        MenuBar mainBar = new MenuBar();
+        borderPane.setTop(mainBar);
 
         Menu menuFileLv1 = new Menu("File");
+        mainBar.getMenus().addAll(menuFileLv1,new Menu("jose"));
+        String[] namesLv1 = {"New",
+                "Open...",
+                "Recent Projects",
+                "Close Project",
+                "Settings...",
+                "Project Structure...",
+                "Plugins...",
+                "File Properties",
+                "Local History",
+                "Save All",
+                "Reload All from Disk",
+                "Repair IDE",
+                "Invalidate Caches...",
+                "Manage IDE Settings",
+                "New Projects Setup",
+                "Save File as Template",
+                "Export",
+                "Print...",
+                "Power Save Mode",
+                "Exit"};
 
-        String[] namesLv1 = {};//todo
         int[] excluidosLv1 = {0,2,7,8,13,14,16};
 
 
         List<javafx.scene.control.MenuItem> menuItemsLv1 = getElementosList(namesLv1, excluidosLv1);
 
-
-        for(int i = 0; i < namesLv1.length; i++){
-
+        for (MenuItem menuItem : menuItemsLv1) {
+            menuFileLv1.getItems().add(menuItem);
         }
 
-
-        Scene scene = new Scene(borderPane, 400, 400);
+        Scene scene = new Scene(borderPane);
         primaryStage.setTitle("T2.8.1 MenuBar");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -51,8 +73,6 @@ public class T2_8_1_MenuBar extends Application {
     public static List<javafx.scene.control.MenuItem> getElementosList(String[] namesLv, int[] excluidos){
 
         boolean[] boolMenuItems = new boolean[namesLv.length];
-
-        // este array booleano es para determinar si el objeto que voy a crear es o no un Menu Item, manualmente excluyo los objetos tipo Menu
         Arrays.fill(boolMenuItems, true);
         for(Integer i:excluidos){
             boolMenuItems[i] = false;
@@ -67,38 +87,28 @@ public class T2_8_1_MenuBar extends Application {
                 lista.add(new javafx.scene.control.Menu(name));
             }
         }
-
         return lista;
     }
+
+    public static void setImagenesNivel( List<javafx.scene.control.MenuItem> lista,
+                                         int[] incluidosImg, String[] rutasImg,
+                                         int[] incluidosAtj, String[] atajos){
+            for(int i = 0; i < lista.size(); i++){
+                if (i == incluidosImg[i]){
+                    Image image = new Image(rutasImg[i]);
+                    ImageView imageView = new ImageView(image);
+                    imageView.setFitWidth(15);
+                    imageView.setFitHeight(15);
+                    lista.get(i)
+                    /*
+                    Image image1_4_3 = new Image("file:src/main/resources/img/linux.png");
+                    ImageView imageView1_4_3 = new ImageView(image1_4_3);
+                    imageView1_4_3.setFitHeight(15);
+                    imageView1_4_3.setFitWidth(15);
+                    menuItem1_4_3.setGraphic(imageView1_4_3);
+                    * */
+                }
+            }
+    }
 }
-//class MenuData{
-//
-//    private MenuItem menuItem;
-//    private String name;
-//
-//    public MenuData(MenuItem menuItem, String name) {
-//        this.menuItem = menuItem;
-//        this.name = name;
-//    }
-//
-//    public boolean isMenuItem(){
-//        return (menuItem instanceof Menu);
-//    }
-//
-//    public MenuItem getMenuItem() {
-//        return menuItem;
-//    }
-//
-//    public void setMenuItem(MenuItem menuItem) {
-//        this.menuItem = menuItem;
-//    }
-//
-//
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-//}
+
