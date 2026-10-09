@@ -4,11 +4,13 @@
  */
 package walter_massari_barros_iihoshi_practica05;
 
+import java.io.Serializable;
+
 /**
  *
  * @author alumno
  */
-public class Alimento {
+public class Alimento implements Serializable{
     private String id;
     private int energiaAportar100g;
     private int hidratosCarbono100g;
@@ -25,6 +27,26 @@ public class Alimento {
         this.grasasSaturadas100g = grasasSaturadas100g;
         this.grasasInsaturadas100g = grasasInsaturadas100g;
         this.proteinas100g = proteinas100g;
+    }
+
+    public Alimento() {
+    }
+
+    @Override
+    public String toString() {
+        return "Alimento{" + "id=" + id + ", energiaAportar100g=" + energiaAportar100g + ", hidratosCarbono100g=" + hidratosCarbono100g + ", azucares100g=" + azucares100g + ", grasasSaturadas100g=" + grasasSaturadas100g + ", grasasInsaturadas100g=" + grasasInsaturadas100g + ", proteinas100g=" + proteinas100g + '}';
+    }
+    
+    
+    
+    
+    public static int comprobarAlimento(Alimento alimento){
+        int suma = 
+        alimento.hidratosCarbono100g +
+        alimento.grasasSaturadas100g +
+        alimento.grasasInsaturadas100g +
+        alimento.proteinas100g;
+        return suma;
     }
 
     public String getId() {
