@@ -5,12 +5,30 @@
 package seguros;
 
 import data.Coche;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  *
@@ -57,12 +75,7 @@ public class Gestion {
                     
                 case "5":
                     System.out.println("convertir a csv o xml");
-                    String tipoDoc = sc.nextLine();
-                    if (tipoDoc.equals("csv")){
-                        
-                    }else if(tipoDoc.equals("xml")){
-                        
-                    }
+                    exportar(coches);
                     
                     break;
                 case "salir":
@@ -82,7 +95,7 @@ public class Gestion {
                   2) Modificar datos de un cocheo
                   3) Eliminar un coche existente
                   4) Crear coche nuevo
-                  4) Exportar informacion de coches a csv o xml
+                  5) Exportar informacion de coches a csv o xml
                   Teclea {salir} para salir del menu""";        
         System.out.println(mensaje_menu);
         try {
@@ -98,6 +111,81 @@ public class Gestion {
         System.out.println("\nPresiona Enter para volvear al menu");
         sc.nextLine();    
     }
+    
+    private void exportar(List<Coche> listaCoches){
+        System.out.println("1) csv \n2) xml");
+        String opcion = sc.nextLine();
+        String xml = "src/Files/coches.xml";
+        String csv = "src/Files/coches.csv";
+        switch (opcion) {
+            case "1" ->                 {
+                    File dst = new File(csv);
+                    try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dst)))){
+                        for (Coche c : listaCoches){
+                            bw.write(c.toString());
+                            bw.newLine();
+                        }
+                    }catch(IOException e){
+                        System.out.println(e.getMessage());
+                    }                      }
+            case "2" ->                 {
+                    File dst = new File(xml);
+                    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+                    try {
+                        DocumentBuilder builder = factory.newDocumentBuilder();
+
+                        DOMImplementation implementation = builder.getDOMImplementation();
+
+                        Document documento = implementation.createDocument(
+                                null, "Coches", null
+                        );
+
+                        documento.setXmlVersion("1.0");
+
+                        Element elementListaCoches = documento.getDocumentElement();
+
+                        for (Coche c : listaCoches) {
+                            Element elementCoche = documento.createElement("Coche");
+
+                            elementCoche.setAttribute("Marca", c.getMarca());
+                            elementCoche.setAttribute("Modelo", c.getModelo());
+                            elementCoche.setAttribute("Matricula",
+                                    String.valueOf(c.getMatricula()));
+                            elementCoche.setAttribute("Year_Matriculacion",
+                                    String.valueOf(c.getAñoMatriculacion()));
+                            elementCoche.setAttribute("Color", c.getColor());
+                            elementCoche.setAttribute("DescansaEnGaraje",
+                                    c.isDescansaEnGaraje() ? "Si" : "No");
+                            elementCoche.setAttribute("KilometrajeAnual",
+                                    String.valueOf(c.getKilometrajeAnual()));
+
+                            elementListaCoches.appendChild(elementCoche);
+                        }
+
+                        Result result = new StreamResult(dst);
+                        Source source = new DOMSource(documento);
+
+                        Transformer transformer = TransformerFactory.newInstance()
+                                .newTransformer();
+
+                        // Formatear el XML con indentación
+                        transformer.setOutputProperty(
+                                javax.xml.transform.OutputKeys.INDENT, "yes");
+                        transformer.setOutputProperty(
+                                "{http://xml.apache.org/xslt}indent-amount", "4");
+
+                        transformer.transform(source, result);
+
+                    } catch (ParserConfigurationException | TransformerException e) {
+                        e.printStackTrace();
+                    }                      
+            }
+            default -> System.out.println("Opcion no contemplada");
+        }
+        
+        volver();
+    } 
     
     private Coche getCoche(List<Coche> coches){
         int matricula;

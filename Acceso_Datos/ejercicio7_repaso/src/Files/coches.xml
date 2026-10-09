@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Coches>
+    <Coche Color="Amarillo" DescansaEnGaraje="No" KilometrajeAnual="1400.0" Marca="McLaren" Matricula="4" Modelo="F1" Year_Matriculacion="2021"/>
+    <Coche Color="Rojo" DescansaEnGaraje="Si" KilometrajeAnual="30000.0" Marca="Audi" Matricula="3" Modelo="A3" Year_Matriculacion="2018"/>
+    <Coche Color="Azul" DescansaEnGaraje="Si" KilometrajeAnual="0.0" Marca="Mercedes Benz" Matricula="2" Modelo="Clase B" Year_Matriculacion="2020"/>
+    <Coche Color="Blanco" DescansaEnGaraje="Si" KilometrajeAnual="10000.0" Marca="Dacia" Matricula="1" Modelo="C4" Year_Matriculacion="2014"/>
+</Coches>

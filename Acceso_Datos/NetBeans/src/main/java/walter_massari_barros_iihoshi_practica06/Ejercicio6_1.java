@@ -102,7 +102,7 @@ public class Ejercicio6_1 {
                                                             .newTransformer();
                 transformer.transform(source, result);
             } catch (ParserConfigurationException | TransformerConfigurationException ex) {
-                System.out.println(ex.getMessage());
+                 System.out.println(ex.getMessage());
             } catch (TransformerException ex) {
                 System.getLogger(Ejercicio6_1.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             } 

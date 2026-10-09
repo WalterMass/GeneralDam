@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Pueblos>
+    <Pueblo Extension="120" Nombre="Valdemora">
+        <Viviendas>
+            <Vivienda Direccion="Calle Mayor 1">
+                <Habitantes>
+                    <Habitante Apellidos="García López" AñoNacimiento="1985" Nombre="Juan"/>
+                    <Habitante Apellidos="García López" AñoNacimiento="1988" Nombre="María"/>
+                </Habitantes>
+            </Vivienda>
+            <Vivienda Direccion="Calle Sol 12">
+                <Habitantes>
+                    <Habitante Apellidos="Martínez Ruiz" AñoNacimiento="1970" Nombre="Pedro"/>
+                    <Habitante Apellidos="Martínez Ruiz" AñoNacimiento="2001" Nombre="Lucía"/>
+                </Habitantes>
+            </Vivienda>
+        </Viviendas>
+    </Pueblo>
+    <Pueblo Extension="85" Nombre="Robledal">
+        <Viviendas>
+            <Vivienda Direccion="Plaza España 3">
+                <Habitantes>
+                    <Habitante Apellidos="Fernández Díaz" AñoNacimiento="1992" Nombre="Ana"/>
+                    <Habitante Apellidos="Fernández Díaz" AñoNacimiento="1990" Nombre="Carlos"/>
+                </Habitantes>
+            </Vivienda>
+            <Vivienda Direccion="Calle Luna 7">
+                <Habitantes>
+                    <Habitante Apellidos="Sánchez Pérez" AñoNacimiento="1965" Nombre="Elena"/>
+                </Habitantes>
+            </Vivienda>
+        </Viviendas>
+    </Pueblo>
+    <Pueblo Extension="210" Nombre="Monteverde">
+        <Viviendas>
+            <Vivienda Direccion="Avenida del Río 15">
+                <Habitantes>
+                    <Habitante Apellidos="Torres Martín" AñoNacimiento="1978" Nombre="Miguel"/>
+                    <Habitante Apellidos="Torres Martín" AñoNacimiento="1980" Nombre="Laura"/>
+                    <Habitante Apellidos="Torres Martín" AñoNacimiento="2010" Nombre="Sofía"/>
+                </Habitantes>
+            </Vivienda>
+            <Vivienda Direccion="Calle Olivo 9">
+                <Habitantes>
+                    <Habitante Apellidos="Romero Gil" AñoNacimiento="1995" Nombre="David"/>
+                </Habitantes>
+            </Vivienda>
+        </Viviendas>
+    </Pueblo>
+    <Pueblo Extension="65" Nombre="Villaflor">
+        <Viviendas>
+            <Vivienda Direccion="Calle Jardín 4">
+                <Habitantes>
+                    <Habitante Apellidos="Navarro Ruiz" AñoNacimiento="1958" Nombre="Isabel"/>
+                    <Habitante Apellidos="Navarro Ruiz" AñoNacimiento="1955" Nombre="Antonio"/>
+                </Habitantes>
+            </Vivienda>
+            <Vivienda Direccion="Plaza del Molino 2">
+                <Habitantes>
+                    <Habitante Apellidos="Moreno Castro" AñoNacimiento="2003" Nombre="Paula"/>
+                    <Habitante Apellidos="Moreno Castro" AñoNacimiento="2000" Nombre="Javier"/>
+                </Habitantes>
+            </Vivienda>
+        </Viviendas>
+    </Pueblo>
+    <Pueblo Extension="175" Nombre="Peñablanca">
+        <Viviendas>
+            <Vivienda Direccion="Calle Castillo 10">
+                <Habitantes>
+                    <Habitante Apellidos="Jiménez Soto" AñoNacimiento="1982" Nombre="Alberto"/>
+                    <Habitante Apellidos="Jiménez Soto" AñoNacimiento="1984" Nombre="Carmen"/>
+                </Habitantes>
+            </Vivienda>
+            <Vivienda Direccion="Camino Real 21">
+                <Habitantes>
+                    <Habitante Apellidos="Ortega León" AñoNacimiento="1975" Nombre="Daniel"/>
+                    <Habitante Apellidos="Ortega León" AñoNacimiento="2005" Nombre="Clara"/>
+                    <Habitante Apellidos="Ortega León" AñoNacimiento="2008" Nombre="Mario"/>
+                </Habitantes>
+            </Vivienda>
+        </Viviendas>
+    </Pueblo>
+</Pueblos>

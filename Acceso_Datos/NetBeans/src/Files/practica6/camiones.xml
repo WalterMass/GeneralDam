@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<camiones>
+    <camion matricula="1234ABC">
+        <marca>Volvo</marca>
+        <modelo>FE18</modelo>
+        <anio>2020</anio>
+    </camion>
+        <camion matricula="5678DEF">
+        <marca>Mercedes-Benz</marca>
+        <modelo>Actros</modelo>
+        <anio>2019</anio>
+    </camion>
+        <camion matricula="9012GHI">
+        <marca>Scania</marca>
+        <modelo>Streamline</modelo>
+        <anio>2021</anio>
+    </camion>
+    <camion matricula="3456JKL">
+        <marca>Iveco</marca>
+        <modelo>Daily</modelo>
+        <anio>2022</anio>
+    </camion>
+</camiones>
