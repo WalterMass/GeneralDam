@@ -24,7 +24,7 @@ public class Ejercicio3_1 {
                 case "1": actividad1(new File("src/Files/datos.dat")); break;
                 case "2": actividad2();break;
                 case "3": actividad3();break;
-                case "4": ;break;
+                case "4": actividad4();break;
             }
 
         }while(!opcion.equalsIgnoreCase("salir"));
@@ -35,9 +35,9 @@ public class Ejercicio3_1 {
         String mensaje_menu =
                 "MENU\n"+
                 "1) lee byte a byte el contenido del datos.dat\n"+
-                "2) \n"+
-                "3) \n"+
-                "4) \n"+
+                "2) lee en bloques de 1000 byte\n"+
+                "3) lee el contenido del fichero texto.tx\n"+
+                "4) utilizando Scanner, lee el contenido del fichero texto.txt\n"+
                 "{salir}"; 
         System.out.println(mensaje_menu);
         String opcion =sc.nextLine();
@@ -108,8 +108,17 @@ public class Ejercicio3_1 {
     }
     
     public static void actividad4() throws IOException{
+        String datos;
         String ruta = "src/Files/ficheroEj/texto.txt";
+        File file = new File(ruta);
         
+        try (Scanner lectorDatos = new Scanner(file)) {
+            while (lectorDatos.hasNextLine()) {
+                datos = lectorDatos.nextLine();
+                System.out.println(datos);
+            }
+        }
+
         
     }
     
