@@ -19,7 +19,7 @@ import org.xml.sax.SAXException;
  *
  * @author waltermassari
  */
-public class Ejericicio6_3 {
+public class Ejercicio6_3 {
     public static void main(String[] args) {
         actividad3();
     }

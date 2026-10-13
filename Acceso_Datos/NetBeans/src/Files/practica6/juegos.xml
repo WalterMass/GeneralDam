@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<coleccionJuegos>
+    <euros>
+        <juego id="1">
+            <nombre>Agricola Familiar</nombre>
+            <minEdad>8</minEdad>
+            <minJugadores>1</minJugadores>
+            <maxJugadores>4</maxJugadores>
+            <tiempoJuego>45</tiempoJuego>
+            <tipo>Euro</tipo>
+        </juego>
+        <juego id="2">
+            <nombre>Aventureros al tren</nombre>
+            <minEdad>8</minEdad>
+            <minJugadores>2</minJugadores>
+            <maxJugadores>5</maxJugadores>
+            <tiempoJuego>30</tiempoJuego>
+            <tipo>Euro</tipo>
+        </juego>
+    </euros>
+    <draft>
+        <juego id="3">
+            <nombre>7 Wonders</nombre>
+            <minEdad>10</minEdad>
+            <minJugadores>2</minJugadores>
+            <maxJugadores>7</maxJugadores>
+            <tiempoJuego>30</tiempoJuego>
+            <tipo>Draft</tipo>
+        </juego>
+    </draft>
+    <deckBuilders>
+        <juego id="4">
+            <nombre>Ascension</nombre>
+            <minEdad>13</minEdad>
+            <minJugadores>1</minJugadores>
+            <maxJugadores>4</maxJugadores>
+            <tiempoJuego>30</tiempoJuego>
+            <tipo>Deck Builder</tipo>
+        </juego>
+        <juego id="5">
+            <nombre>Hero Realms</nombre>
+            <minEdad>12</minEdad>
+             <minJugadores>2</minJugadores>
+            <maxJugadores>4</maxJugadores>
+            <tiempoJuego>20</tiempoJuego>
+            <tipo>Deck Builder</tipo>
+        </juego>
+    </deckBuilders>
+</coleccionJuegos>
+
+
+
