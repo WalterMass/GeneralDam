@@ -1,4 +1,4 @@
-package T1.repaso_executor;
+package T1.repaso_executor.ejercicio2;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 

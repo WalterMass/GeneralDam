@@ -1,4 +1,5 @@
-package T1.repaso_executor;
+package T1.repaso_executor.ejercicio1;
+
 
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
@@ -11,7 +12,7 @@ public class Ejercicio1 {
     static void main() {
         execute();
     }
-    public static void execute(){
+    private static void execute(){
         try ( ExecutorService executor = Executors.newFixedThreadPool(NUM_HILOS) ) {
 
             NumeroSecreto numeroS = new NumeroSecreto(tantear());
