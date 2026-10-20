@@ -1,8 +1,11 @@
 package T1.repaso_executor.ejercicio2;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 class NumeroSecreto {
+    public static AtomicInteger numeroPartida= new AtomicInteger(1);
+
     private final int numero;
     AtomicBoolean descubierto = new AtomicBoolean(false);
 
@@ -11,7 +14,7 @@ class NumeroSecreto {
     }
 
     // comprueba si el numero es verdadero
-    public synchronized int probuestaNumero(int propuesta) {
+    public synchronized int probuestaNumero(int propuesta, int numeroPartida) {
         // devuelve -1 si descubierto esta marcado como verdadero
         if (this.descubierto.get()) {
             return -1;
@@ -24,6 +27,10 @@ class NumeroSecreto {
                 //caso contrario devuelve 0
             } else return 0;
         }
+    }
+
+    public int getNumPartida(){
+        return numeroPartida.get();
     }
 
     public AtomicBoolean getDescubierto() {

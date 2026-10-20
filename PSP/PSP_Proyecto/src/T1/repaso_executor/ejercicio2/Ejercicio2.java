@@ -1,6 +1,12 @@
 package T1.repaso_executor.ejercicio2;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Ejercicio2 {
     static final int NUM_HILOS = 10;
@@ -12,10 +18,22 @@ public class Ejercicio2 {
     }
 
     private static void execute() {
-        int numeroPartida = 1;
+        AtomicInteger numeroPartida = new AtomicInteger(1);
+
+        try (ExecutorService executor = Executors.newFixedThreadPool(NUM_HILOS)) {
+            List<NumeroSecreto> numeroSecretos = new ArrayList<>();
+            while(numeroPartida.get() <= NUM_PARTIDAS){
+                numeroSecretos.add(new NumeroSecreto(tantear()));
+                for (int i = 0; i<NUM_HILOS; i++){
+                    intentarAdivinar(numeroPartida, executor);
+                }
+                numeroPartida.getAndIncrement();
+            }
+        }
+
     }
 
-    private static void intentarAdivinar(int numeroPartida) {
+    private static void intentarAdivinar(AtomicInteger numeroPartida, ExecutorService executor) throws RuntimeException{
 
     }
 
