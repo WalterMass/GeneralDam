@@ -1,43 +1,75 @@
 package T1.repaso_executor.ejercicio2;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
-class NumeroSecreto {
-    public static AtomicInteger numeroPartida= new AtomicInteger(1);
+import java.util.Random;
 
-    private final int numero;
-    AtomicBoolean descubierto = new AtomicBoolean(false);
+public class NumeroSecreto {
+    static Random rand = new Random();
 
-    public NumeroSecreto(int numero) {
+    private int numeroPartida= 1;
+    private final int totalPartidas;
+    private int numero;
+    private boolean juegoTerminado = false;
+
+    public NumeroSecreto(int numero, int totalPartidas) {
         this.numero = numero;
+        this.totalPartidas = totalPartidas;
     }
 
-    // comprueba si el numero es verdadero
-    public synchronized int probuestaNumero(int propuesta, int numeroPartida) {
-        // devuelve -1 si descubierto esta marcado como verdadero
-        if (this.descubierto.get()) {
+    /*METODO PRINCIPAL*/
+
+    public synchronized int propuestaNumero(int propuesta, int idPartida) {
+
+        boolean partidaNoEsActual = numeroPartida != idPartida;
+
+        if (juegoTerminado || partidaNoEsActual) {
             return -1;
-            // si no lo esta comprueba que el el parametro propuesta sea igual al numero secreto
         } else {
-            //si el parametro propuesta es igual al numero secreto devuelve 1
-            if (propuesta == this.numero) {
-                this.descubierto.set(true);
+
+            boolean propuestaEsGanadora = propuesta == this.numero;
+
+            if (propuestaEsGanadora) {
+                numeroPartida++;
+
+                juegoTerminado = numeroPartida > totalPartidas ;
+                if (!juegoTerminado){
+                    this.numero = tantear();
+                }
+
                 return 1;
-                //caso contrario devuelve 0
-            } else return 0;
+
+            } else {
+                return 0;
+            }
         }
     }
 
-    public int getNumPartida(){
-        return numeroPartida.get();
+    /*METODOS AUXILIARES*/
+
+    public synchronized int getNumPartida(){
+        return numeroPartida;
     }
 
-    public AtomicBoolean getDescubierto() {
-        return descubierto;
+
+    public static int tantear(){
+        return rand.nextInt(0, 101);
     }
 
-    public void setDescubierto(AtomicBoolean descubierto) {
-        this.descubierto = descubierto;
+    /*GETTERS & SETTERS*/
+    public synchronized boolean isJuegoTerminado() {
+        return juegoTerminado;
     }
+
+    public void setJuegoTerminado(boolean juegoTerminado) {
+        this.juegoTerminado = juegoTerminado;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
 }

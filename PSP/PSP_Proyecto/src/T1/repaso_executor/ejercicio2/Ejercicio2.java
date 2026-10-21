@@ -1,45 +1,54 @@
 package T1.repaso_executor.ejercicio2;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Ejercicio2 {
     static final int NUM_HILOS = 10;
-    //limite para
+    //limite de partidas
     static final int NUM_PARTIDAS = 3;
-    static Random rand = new Random();
-    static void main() {
+
+    static void main(String[] args) {
         execute();
     }
 
     private static void execute() {
-        AtomicInteger numeroPartida = new AtomicInteger(1);
-
         try (ExecutorService executor = Executors.newFixedThreadPool(NUM_HILOS)) {
-            List<NumeroSecreto> numeroSecretos = new ArrayList<>();
-            while(numeroPartida.get() <= NUM_PARTIDAS){
-                numeroSecretos.add(new NumeroSecreto(tantear()));
-                for (int i = 0; i<NUM_HILOS; i++){
-                    intentarAdivinar(numeroPartida, executor);
-                }
-                numeroPartida.getAndIncrement();
+            NumeroSecreto numeroSecreto  = new NumeroSecreto(NumeroSecreto.tantear(), NUM_PARTIDAS);
+            for (int i = 0; i < NUM_HILOS; i++){
+                intentarAdivinar(executor, numeroSecreto);
             }
         }
-
     }
 
-    private static void intentarAdivinar(AtomicInteger numeroPartida, ExecutorService executor) throws RuntimeException{
+    private static void intentarAdivinar(ExecutorService executor, NumeroSecreto numeroSecreto){
+        executor.submit(() -> {
+            while(true){
+                String nombreHilo = Thread.currentThread().getName();
+                int idPartida = numeroSecreto.getNumPartida();
+                int propuesta = NumeroSecreto.tantear();
+                System.out.printf("\n%s quiere jugar a la partida nº%d", nombreHilo, idPartida);
+                int resultadoPropuesta = numeroSecreto.propuestaNumero(propuesta, idPartida);
 
+                if (resultadoPropuesta == -1 ){
+                    if (numeroSecreto.isJuegoTerminado()){
+                        System.out.printf("\n%s: el juego ya ha terminado", nombreHilo);
+                        return;
+                    }
+                    System.out.printf("\n%s: la partida nº%d ha terminado", nombreHilo, idPartida);
+                    continue;
+                }
+
+                if (resultadoPropuesta == 1) {
+                    System.out.printf("\n%s: ha ganando la partida nº%d acertado el numero oculto: %d, ", nombreHilo, idPartida, propuesta);
+                    return;
+                }
+
+            }
+        });
     }
 
-    private static int tantear(){
-        return rand.nextInt(0, 101);
-    }
+
 }
 
 /*Igual que la actividad propuesta anterior pero se juega partida tras partida. A cada partida se le

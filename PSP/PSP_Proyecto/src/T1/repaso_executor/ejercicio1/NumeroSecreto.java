@@ -2,7 +2,7 @@ package T1.repaso_executor.ejercicio1;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-class NumeroSecreto {
+public class NumeroSecreto {
     private final int numero;
     AtomicBoolean descubierto = new AtomicBoolean(false);
 
