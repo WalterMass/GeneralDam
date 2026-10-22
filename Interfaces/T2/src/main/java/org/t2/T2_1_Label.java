@@ -17,7 +17,6 @@ public class T2_1_Label extends Application {
         vBox.setAlignment(Pos.TOP_CENTER);
         Label label1 = new Label("HOLA MUNDO!");
         Label label2 = new Label("adios");
-        label1.setBackground(Background.fill(Paint.valueOf("blue")));
 
         vBox.getChildren().addAll(label1, label2);
         Scene scene = new Scene(vBox, 1920, 1080);
