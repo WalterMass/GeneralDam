@@ -2,9 +2,12 @@ package T1.repaso_executor.ejercicio4;
 
 public class Ejercicio4 {
     public static final String[] NOMBRE_HERRAMIENTAS = {"DESTORNILLADOR", "ALICATES", "TALADRO"};
-    public static final int ACT1_NUM_TRABAJADORES = 2;
-    public static final int ACT2_NUM_TRABAJADORES = 1;
-    public static final int ACT3_NUM_TRABAJADORES = 1;
+    public static final int[] ACT_NUM_TRABAJADORES = {2, 1, 1};
+
+    static void main(String[] args) {
+        Obra obra = new Obra();
+        obra.empezarObra(NOMBRE_HERRAMIENTAS, ACT_NUM_TRABAJADORES);
+    }
 
 }
 /*Ejercicio 4

@@ -1,13 +1,18 @@
 package T1.repaso_executor.ejercicio4;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.Semaphore;
 
-public class Herramienta {
-
-    private String nombre;
-    AtomicBoolean enUso = new AtomicBoolean(false);
+public class Herramienta extends Semaphore {
+    private final static int PERMISOS_HERRAMIENTA = 1;
+    private final String nombre;
 
     public Herramienta(String nombre) {
+        super(PERMISOS_HERRAMIENTA);
         this.nombre = nombre;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
 }
