@@ -3,10 +3,16 @@ package T1.repaso_executor.ejercicio4;
 public class Ejercicio4 {
     public static final String[] NOMBRE_HERRAMIENTAS = {"DESTORNILLADOR", "ALICATES", "TALADRO"};
     public static final int[] ACT_NUM_TRABAJADORES = {2, 1, 1};
+    public  static final String[][] HERRAMIENTAS_NECESARIAS_EN_ACT = {
+            {"DESTORNILLADOR", "TALADRO"},
+            {"DESTORNILLADOR, ALICATES"},
+            {"TALADRO, DESTORNILLADOR, ALICATES"}
+    };
+
 
     static void main(String[] args) {
         Obra obra = new Obra();
-        obra.empezarObra(NOMBRE_HERRAMIENTAS, ACT_NUM_TRABAJADORES);
+        obra.empezarObra(NOMBRE_HERRAMIENTAS, ACT_NUM_TRABAJADORES, HERRAMIENTAS_NECESARIAS_EN_ACT);
     }
 
 }

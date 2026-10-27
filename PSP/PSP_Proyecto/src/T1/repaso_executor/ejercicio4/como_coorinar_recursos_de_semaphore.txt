@@ -1,0 +1,76 @@
+/*PREGUNTA*/
+si un mismo hilo tiene que ocupar a la vez 3 recursos diferentes para realizar una
+accion (que no debe poder realizarse si no hace acquire sobre esos 3 recursos) podria
+hacerse con CycleBarrier junto con Semaphore? o existe otro recurso que lo haga
+
+
+/*RESPUESTA*/
+No, CyclicBarrier no sirve para esto. La barrera está diseñada exclusivamente para coordinar tiempos
+de sincronización entre hilos (un punto de encuentro), no para gestionar la adquisición de múltiples recursos.
+
+Para que un mismo hilo adquiera 3 recursos diferentes (3 semáforos distintos) de forma obligatoria antes
+de ejecutar su acción, debes hacerlo mediante la llamada sucesiva a los semáforos.
+
+Sin embargo, hacer esto de forma ingenua introduce un peligro grave en concurrencia: el interbloqueo (deadlock).
+Si el Hilo 1 adquiere el recurso A y busca el B, mientras el Hilo 2 adquiere el B y busca el A,
+ambos se quedarán bloqueados para siempre.
+
+La solución: Adquisición en Orden Estricto (Global Ordering)
+La regla de oro para evitar interbloqueos cuando un hilo necesita múltiples recursos es que todo el
+código de la aplicación adquiera los recursos siempre en el mismo orden exacto
+(por ejemplo, siempre de izquierda a derecha: semA → semB → semC).
+
+Para asegurar que si falla la adquisición del segundo o tercer recurso se liberen
+correctamente los anteriores sin dejar fugas, puedes estructurarlo así de forma limpia:
+
+
+Java
+public void ejecutarConTresRecursos(Semaphore semA, Semaphore semB, Semaphore semC) {
+    boolean adquiridoA = false;
+    boolean adquiridoB = false;
+    boolean adquiridoC = false;
+
+    try {
+        // 1. Adquirimos en orden estricto y secuencial
+        semA.acquire();
+        adquiridoA = true;
+
+        semB.acquire();
+        adquiridoB = true;
+
+        semC.acquire();
+        adquiridoC = true;
+
+        // --- SECCIÓN CRÍTICA ---
+        // ¡Ya tenemos los 3 recursos! Ninguna otra acción puede interferir aquí.
+        System.caout.println("Los 3 recursos adquiridos. Ejecutando acción...");
+
+    } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+        System.err.println("El hilo fue interrumpido mientras esperaba los recursos.");
+    } finally {
+        // 2. Liberación segura en orden inverso (o el que corresponda) asegurando el finally
+        if (adquiridoC) {
+            semC.release();
+        }
+        if (adquiridoB) {
+            semB.release();
+        }
+        if (adquiridoA) {
+            semA.release();
+        }
+    }
+}
+
+¿Por qué este patrón es seguro y limpio?
+
+Garantía de atomicidad lógica:
+-La acción no se ejecuta a menos que los tres semáforos hayan otorgado su permiso con éxito.
+
+-Cero fugas de permisos: Los indicadores booleanos (adquiridoX) combinados con el bloque finally garantizan que si el
+hilo es interrumpido a mitad del proceso, solo se liberarán los recursos que realmente llegó a capturar,
+evitando alterar los contadores de los semáforos.
+
+-Prevención de Deadlocks: Al mantener un orden global estricto (A → B → C) en toda la aplicación,
+es matemáticamente imposible que se produzca un bloqueo mutuo entre hilos.
+
