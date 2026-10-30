@@ -1,6 +1,7 @@
 package T1.repaso_executor.ejercicio4;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -23,15 +24,20 @@ public class Obra {
             String nombreAct = "Actividad-"+ (i + 1);
             actividades[i] = new Actividad(herramientas, nombreAct, herramientasNecesariasEnAct[i], actNumTrabajadores[i]);
         }
-        
-        realizarActividades(actividades);
+
+        int i  = 0;
+        while ( i <= 10 ){
+            System.out.printf("\nVuelta Nº%d:", i+1) ;
+            realizarActividades(actividades);
+            i++;
+            System.out.println("\n\n\n");
+        }
     }
 
     /*este bloque de codigo recoge las actividades creadas desde empezar obra
     y llama a una funcion diferente por cada actividad para que ejecete sus
     trabajos con executorservice*/
-    public void realizarActividades(Actividad[] actividades){
-
+    private void realizarActividades(Actividad[] actividades){
         for (Actividad actividad : actividades) {
             int trabajadores = actividad.getNumTrabajadores();
 
@@ -45,40 +51,91 @@ public class Obra {
 
 
             try (ExecutorService executor = Executors.newFixedThreadPool(trabajadores)){
-                // este bloque es importante, por cada tarea crea un executorservice y le manda las herramientas necesarias para
-                for (int i = 0; i < actividad.getHerramientasNecesarias().length; i++) {
-                    trabajo(
-                            executor,
-                            actividad,
-                            actividad.getHerramientasNecesarias()[i],
-                            barrier,
-                            getRandomActTime()
-                    );
+                //este bloque es importante, por cada tarea crea un executorservice y le manda las herramientas necesarias para realizar la actividad
+
+                //si la barrera no es null el trabajo que ejecuta sera trabajoMultiHilo()
+                if (barrier != null){
+                    for (int i = 0; i < actividad.getHerramientasNecesarias().length; i++) {
+                        trabajoMultiHilo(
+                                executor,
+                                actividad,
+                                actividad.getHerramientasNecesarias()[i],
+                                barrier,
+                                getRandomActTime()
+                        );
+                    }
+
+                //caso contrario ejecutara trabajoMonoHilo()
+                }else {
+                    trabajoMonoHilo(executor, actividad, getRandomActTime());
                 }
+
             }
         }
 
-        //trabajo(executor, actividad,"DESTORNILLADOR", barrier, getRandomActTime());
+    }
+
+    private void trabajoMonoHilo(ExecutorService executor, Actividad actividad, long tiempoAct) {
+        executor.submit( () -> {
+            String nombreHilo = Thread.currentThread().getName();
+
+            String[] nombresNecesarios = actividad.getHerramientasNecesarias();
+            Arrays.sort(nombresNecesarios);
+
+            boolean[] adquiridas = new boolean[nombresNecesarios.length];
+            Arrays.fill(adquiridas, false);
+
+            try {
+                // 1. Adquirimos en orden estricto y secuencial
+                for (int i = 0; i < nombresNecesarios.length; i++) {
+                    Herramienta herramientaActual = getHerramientaByName(actividad.getHerramientas(), nombresNecesarios[i]);
+                    herramientaActual.acquire();
+                    adquiridas[i] = true;
+                    mensajeAdquirirHerramienta(actividad.getNombre(), nombreHilo, nombresNecesarios[i]);
+                }
+
+                // --- SECCIÓN CRÍTICA ---
+                // ¡Ya tenemos los 3 recursos! Ninguna otra acción puede interferir aquí.
+                Thread.sleep(tiempoAct);
+
+
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.err.printf("\nEl \"%s\" fue interrumpido mientras esperaba los recursos.", nombreHilo);
+            }finally {
+                // 2. Liberación segura en orden inverso (o el que corresponda) asegurando el finally
+                for (int i = nombresNecesarios.length - 1; i >= 0; i--) {
+                    if (adquiridas[i]){
+                        Herramienta herramientaActual = getHerramientaByName(actividad.getHerramientas(), nombresNecesarios[i]);
+                        herramientaActual.release();
+                        mensajeLiberarHerramienta(actividad.getNombre(), nombreHilo, nombresNecesarios[i]);
+                    }else{
+                        System.out.printf("\n(%s)  %s - Algo ha salido mal al adquirir la herramienta %s",actividad.getNombre(), nombreHilo, nombresNecesarios[i]);
+                    }
+                }
+            }
+
+
+
+        });
+
     }
 
 
-    public void trabajo(ExecutorService executor, Actividad actividad, String nombreHerramienta, CyclicBarrier barrier, long tiempoAct){
+    private void trabajoMultiHilo(ExecutorService executor, Actividad actividad, String nombreHerramienta, CyclicBarrier barrier, long tiempoAct){
 
         executor.submit( () -> {
             String nombreHilo = Thread.currentThread().getName();
             Herramienta herramienta = getHerramientaByName(actividad.getHerramientas(), nombreHerramienta);
             try{
-                System.out.printf("\n(%s) - %s : Intenta coger la herramienta %s"
-                        ,actividad.getNombre()
-                        ,nombreHilo
-                        ,nombreHerramienta);
 
 
                 herramienta.acquire();
 
-                if(barrier != null){
-                    barrier.await();
-                }
+                mensajeAdquirirHerramienta(actividad.getNombre(), nombreHilo, nombreHerramienta);
+
+
+                barrier.await();
 
                 System.out.printf("\n(%s) - %s : Empieza a trabajar en la actividad"
                         ,actividad.getNombre()
@@ -91,25 +148,35 @@ public class Obra {
                 System.out.println(e.getClass()+": error de cordinacion de hilos, comprobar funcion trabajo()");
             } finally {
                 herramienta.release();
-                System.out.printf("\n(%s) - %s : ha terminado su trabajo y libera la herramienta %s"
-                        ,actividad.getNombre()
-                        ,nombreHilo
-                        ,nombreHerramienta);
-
+                mensajeLiberarHerramienta(actividad.getNombre(), nombreHilo, nombreHerramienta);
             }
         });
 
     }
 
-    public Herramienta getHerramientaByName(List<Herramienta> herramientas, String name){
+    private Herramienta getHerramientaByName(List<Herramienta> herramientas, String name){
         return herramientas.stream()
                 .filter( a -> a.getNombre().equalsIgnoreCase(name))
                 .findFirst()
                 .orElse(null);
     }
 
-    public long getRandomActTime(){
+    private long getRandomActTime(){
         return ThreadLocalRandom.current().nextLong(5, 20) * 10;
+    }
+
+    private void mensajeAdquirirHerramienta(String nombre, String nombreHilo, String nombreHerramienta){
+        System.out.printf("\n(%s) - %s : Ha cogido la herramienta %s"
+                ,nombre
+                ,nombreHilo
+                ,nombreHerramienta);
+    }
+
+    private void mensajeLiberarHerramienta(String nombre, String nombreHilo, String nombreHerramienta) {
+        System.out.printf("\n(%s) - %s : ha terminado su trabajo y libera la herramienta %s"
+                ,nombre
+                ,nombreHilo
+                ,nombreHerramienta);
     }
 
 }

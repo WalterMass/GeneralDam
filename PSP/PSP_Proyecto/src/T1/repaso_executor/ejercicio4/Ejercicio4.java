@@ -5,8 +5,8 @@ public class Ejercicio4 {
     public static final int[] ACT_NUM_TRABAJADORES = {2, 1, 1};
     public  static final String[][] HERRAMIENTAS_NECESARIAS_EN_ACT = {
             {"DESTORNILLADOR", "TALADRO"},
-            {"DESTORNILLADOR, ALICATES"},
-            {"TALADRO, DESTORNILLADOR, ALICATES"}
+            {"DESTORNILLADOR", "ALICATES"},
+            {"TALADRO", "DESTORNILLADOR" , "ALICATES"}
     };
 
 
