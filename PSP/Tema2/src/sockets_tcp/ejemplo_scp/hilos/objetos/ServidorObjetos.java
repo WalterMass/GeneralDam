@@ -2,6 +2,7 @@ package sockets_tcp.ejemplo_scp.hilos.objetos;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,10 @@ public class ServidorObjetos{
             int numCliente = 0;
 
             while(true){
+                Socket socketCliente = socketServer.accept();
+                numCliente++;
+                System.out.println("SERVIDOR: Conexión establecida. Se pasa a hablar con el cliente en su puerto " + socketCliente.getPort());
+
 
             }
         }catch(IOException e){
